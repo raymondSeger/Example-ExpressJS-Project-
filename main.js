@@ -5,6 +5,8 @@ var express  		= require('express');
 var cookieParser 	= require('cookie-parser');
 var app 	 		= express();
 var router 			= express.Router();
+var favicon 		= require('serve-favicon');
+
 
 // set static files
 app.use('/public', express.static('public'));
@@ -56,6 +58,10 @@ app.use(cookieParser());
 app.use(responseTime({
 	'header' : "howLongItTakes"
 }))
+
+// set the favicon
+// https://github.com/expressjs/serve-favicon
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
 
 

@@ -12,9 +12,11 @@
   "author": "Raymond Seger",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.6.1",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "jade": "^1.11.0",
-    "response-time": "^2.3.1"
+    "response-time": "^2.3.1",
+    "serve-favicon": "^2.3.0"
   }
 }
