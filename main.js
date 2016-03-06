@@ -8,7 +8,7 @@ var router 			= express.Router();
 var favicon 		= require('serve-favicon');
 var morgan 			= require('morgan')
 var cookieParser 	= require('cookie-parser')
-
+var helmet 			= require('helmet')
 
 
 
@@ -91,6 +91,17 @@ app.use(function (req, res, next) {
   next(); // <-- important! go to the next middleware
 });
 
+// use HelmetJS https://github.com/helmetjs/
+// Only let me be framed by people of the same origin:
+app.use(helmet.frameguard({ action: 'sameorigin' }))
+app.use(helmet.frameguard())  // defaults to sameorigin
+app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }))
+app.use(helmet.ieNoOpen())
+app.use(helmet.noSniff())
+app.use(helmet.noCache({ noEtag: true }))
+// Enable DNS prefetching (less secure but faster):
+app.use(helmet.dnsPrefetchControl({ allow: true }))
+app.use(helmet.xssFilter())
 
 
 /////////////////////////
