@@ -6,7 +6,7 @@ var cookieParser 	= require('cookie-parser');
 var app 	 		= express();
 var router 			= express.Router();
 var favicon 		= require('serve-favicon');
-
+var morgan 			= require('morgan')
 
 // set static files
 app.use('/public', express.static('public'));
@@ -63,6 +63,9 @@ app.use(responseTime({
 // https://github.com/expressjs/serve-favicon
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
+// morgan logger
+// https://github.com/expressjs/morgan
+app.use(morgan('combined'))
 
 
 
