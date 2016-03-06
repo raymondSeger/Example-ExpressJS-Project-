@@ -9,7 +9,7 @@ var favicon 		= require('serve-favicon');
 var morgan 			= require('morgan')
 var cookieParser 	= require('cookie-parser')
 var helmet 			= require('helmet')
-
+var cookieSession	= require('cookie-session')
 
 
 
@@ -93,15 +93,26 @@ app.use(function (req, res, next) {
 
 // use HelmetJS https://github.com/helmetjs/
 // Only let me be framed by people of the same origin:
-app.use(helmet.frameguard({ action: 'sameorigin' }))
+app.use(helmet.frameguard({ action: 'sameorigin' }));
 app.use(helmet.frameguard())  // defaults to sameorigin
-app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }))
-app.use(helmet.ieNoOpen())
-app.use(helmet.noSniff())
-app.use(helmet.noCache({ noEtag: true }))
+app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
+app.use(helmet.ieNoOpen());
+app.use(helmet.noSniff());
+app.use(helmet.noCache({ noEtag: true }));
 // Enable DNS prefetching (less secure but faster):
-app.use(helmet.dnsPrefetchControl({ allow: true }))
-app.use(helmet.xssFilter())
+app.use(helmet.dnsPrefetchControl({ allow: true }));
+app.use(helmet.xssFilter());
+
+// cookie-session
+// https://github.com/expressjs/cookie-session
+app.set('trust proxy', 1); // trust first proxy
+app.use(cookieSession({
+  name: 'session',  // The name of the cookie to set
+  keys: ['key1', 'key2'] // first key is for sign & second for verify
+}));
+
+
+
 
 
 /////////////////////////
@@ -140,11 +151,19 @@ app.get('/user', function (req, res, next) {
 });
 
 // this will render the jade template inside current_direction() + /view/index
-app.get('/jadeExample1', function (req, res) {
+app.get('/jadeExample1', function (req, res,  next) {
   res.render( __dirname + '/view/index', { title: 'Hey', message: 'Hello there!'});
 });
 
+// this will render the jade template inside current_direction() + /view/index
+app.get('/getCookieSession', function (req, res, next) {
 
+	if( req.session.views == null) {
+		req.session.views = 0;
+	}
+	req.session.views = req.session.views + 1;
+    res.send(req.session.views + " views");
+});
 
 
 
