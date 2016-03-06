@@ -1,5 +1,6 @@
 // main.js
 var greeting 		= require("./greeting.js");
+var responseTime 	= require('response-time')
 var express  		= require('express');
 var cookieParser 	= require('cookie-parser');
 var app 	 		= express();
@@ -48,8 +49,13 @@ app.use(function(err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 
-// load the cookie-parsing middleware
+// load the middlewares
 app.use(cookieParser());
+// This will create header of howLongItTakes to show how long it takes for the server to process the request
+// https://github.com/expressjs/response-time
+app.use(responseTime({
+	'header' : "howLongItTakes"
+}))
 
 
 
