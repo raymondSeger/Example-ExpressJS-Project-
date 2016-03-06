@@ -14,9 +14,11 @@ gulp.task('concatThenUglifyThenMinify', function() {
 });
 
 gulp.task('processSass', function () {
-  return gulp.src('./resources/sass/*.scss')
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(gulp.dest('./public/dist/css'));
+
+	return gulp.src('./resources/sass/*.scss')
+	    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+	    .pipe(gulp.dest('./public/dist/css'));
+		
 });
 
 gulp.task('sass:watch', function () {
