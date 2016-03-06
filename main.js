@@ -7,9 +7,8 @@ var app 	 		= express();
 var router 			= express.Router();
 var favicon 		= require('serve-favicon');
 var morgan 			= require('morgan')
+var cookieParser 	= require('cookie-parser')
 
-// set static files
-app.use('/public', express.static('public'));
 
 
 
@@ -39,6 +38,9 @@ var middleware_requestTime = function (req, res, next) {
 };
 app.use(middleware_requestTime);
 
+// set static files
+app.use('/public', express.static('public'));
+
 // anynomous middleware for /user/ router
 app.use('/user', function (req, res, next) {
   console.log('Request Type:', req.method);
@@ -67,6 +69,27 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 // https://github.com/expressjs/morgan
 app.use(morgan('combined'))
 
+// cookie handler
+// https://github.com/expressjs/cookie-parser
+app.use(cookieParser())
+app.use(function (req, res, next) {
+  // check if client sent cookie
+  var cookie = req.cookies.cookieName;
+  if (cookie === undefined)
+  {
+    // no: set a new cookie
+    var randomNumber=Math.random().toString();
+    randomNumber=randomNumber.substring(2,randomNumber.length);
+    res.cookie('cookieName', randomNumber, { maxAge: 900000, httpOnly: true });
+    console.log('cookie created successfully');
+  } 
+  else
+  {
+    // yes, cookie was already present 
+    console.log('cookie exists', cookie);
+  } 
+  next(); // <-- important! go to the next middleware
+});
 
 
 
