@@ -10,7 +10,7 @@ var morgan 			= require('morgan')
 var cookieParser 	= require('cookie-parser')
 var helmet 			= require('helmet')
 var cookieSession	= require('cookie-session')
-
+var request 		= require('request');
 
 
 
@@ -165,8 +165,16 @@ app.get('/getCookieSession', function (req, res, next) {
     res.send(req.session.views + " views");
 });
 
+app.get('/useRequest', function (req, res, next) {
 
+	request('http://www.google.com', function (error, response, body) {
 
+	  if (!error && response.statusCode == 200) {
+	    res.send(body) // Show the HTML for the Google homepage. 
+	  }
+
+	})
+});
 
 
 
