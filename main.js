@@ -1,17 +1,17 @@
 // main.js
 var greeting 		= require("./greeting.js");
-var responseTime 	= require('response-time')
+var responseTime 	= require('response-time');
 var express  		= require('express');
 var cookieParser 	= require('cookie-parser');
 var app 	 		= express();
 var router 			= express.Router();
 var favicon 		= require('serve-favicon');
-var morgan 			= require('morgan')
-var cookieParser 	= require('cookie-parser')
-var helmet 			= require('helmet')
-var cookieSession	= require('cookie-session')
+var morgan 			= require('morgan');
+var cookieParser 	= require('cookie-parser');
+var helmet 			= require('helmet');
+var cookieSession	= require('cookie-session');
 var request 		= require('request');
-
+var fs 				= require('fs-extra');
 
 
 /////////////////////////
@@ -174,6 +174,18 @@ app.get('/useRequest', function (req, res, next) {
 	  }
 
 	})
+});
+
+app.get('/testFSExtra', function (req, res, next) {
+
+	fs.mkdirs( __dirname + '/tmp/some/long/path/that/prob/doesnt/exist', function (err) {
+	  if (err) {
+	  	return console.error(err)
+	  }
+	})
+
+	res.send('end');
+
 });
 
 
