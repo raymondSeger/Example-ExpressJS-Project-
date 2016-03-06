@@ -1,0 +1,22 @@
+{
+  "name": "nodejs",
+  "description": "Raymond's project",
+  "main": "main.js",
+  "authors": [
+    "Raymond Seger"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "raymond"
+  ],
+  "homepage": "https://github.com/raymondSeger/Example-ExpressJS-Project-",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
